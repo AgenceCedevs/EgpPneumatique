@@ -1,4 +1,21 @@
 {
-	"files": [],
-	"references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
+	"compilerOptions": {
+		"target": "ESNext",
+		"module": "ESNext",
+		"moduleResolution": "bundler",
+		"jsx": "react-jsx",
+		"strict": true,
+		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"noEmit": true,
+		"forceConsistentCasingInFileNames": true,
+		"noUnusedLocals": true,
+		"noUnusedParameters": true,
+		"paths": {
+			"@/*": ["./src/*"],
+			"@shared": ["../shared/src/index.ts"],
+			"@shared/*": ["../shared/src/*"]
+		}
+	},
+	"include": ["src"]
 }

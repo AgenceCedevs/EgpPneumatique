@@ -6,13 +6,15 @@
 	"scripts": {
 		"dev": "vite",
 		"build": "tsc -b && vite build",
-		"preview": "vite preview"
+		"preview": "vite preview",
+		"postbuild": "node scripts/prerender.mjs"
 	},
 	"dependencies": {
 		"@egppneumatique/shared": "*",
 		"@emailjs/browser": "latest",
 		"react": "^19.3.1",
 		"react-dom": "^19.3.1",
+		"react-helmet-async": "^3.0.0",
 		"react-router": "^7",
 		"react-toastify": "latest"
 	},
@@ -21,6 +23,7 @@
 		"@types/react": "^19.3.0",
 		"@types/react-dom": "^19.3.0",
 		"@vitejs/plugin-react": "^6.1.2",
+		"puppeteer": "^25.17.0",
 		"typescript": "~6.0.3",
 		"vite": "^8.3.6"
 	}

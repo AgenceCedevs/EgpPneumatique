@@ -7,14 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": [
-			"**",
-			"!!**/node_modules",
-			"!**/dist",
-			"!README.md",
-			"!setup/verify_monorepo/verify-report-*.md",
-			"!setup/verify_monorepo/report.css"
-		]
+		"includes": ["**", "!!**/node_modules", "!**/dist", "!README.md", "!setup/verify_monorepo/verify-report-*.md", "!setup/verify_monorepo/report.css"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -24,7 +17,7 @@
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true
+			"preset": "recommended"
 		}
 	},
 	"javascript": {
@@ -42,9 +35,7 @@
 	},
 	"overrides": [
 		{
-			"includes": [
-				"web/src/vite-env.d.ts"
-			],
+			"includes": ["web/src/vite-env.d.ts"],
 			"linter": {
 				"rules": {
 					"correctness": {
@@ -54,10 +45,7 @@
 			}
 		},
 		{
-			"includes": [
-				"web/public/**/*.svg",
-				"web/src/assets/**/*.svg"
-			],
+			"includes": ["web/public/**/*.svg", "web/src/assets/**/*.svg"],
 			"linter": {
 				"rules": {
 					"a11y": {
