@@ -1,0 +1,11 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"strict": true,
+		"declaration": true,
+		"rootDir": "src",
+		"module": "CommonJS",
+		"outDir": "dist/cjs"
+	},
+	"include": ["src/**/*"]
+}
