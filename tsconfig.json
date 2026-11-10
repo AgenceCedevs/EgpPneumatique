@@ -5,7 +5,9 @@
 		"moduleResolution": "bundler",
 		"strict": true,
 		"esModuleInterop": true,
+		"skipLibCheck": true,
+		"forceConsistentCasingInFileNames": true,
 		"types": ["node"]
 	},
-	"include": ["setup/**/*"]
+	"include": ["setup/**/*", "server/src/**/*.ts"]
 }
