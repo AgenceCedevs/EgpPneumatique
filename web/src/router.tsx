@@ -1,8 +1,13 @@
+import { constants } from "@shared";
 import { useEffect, useRef } from "react";
 import { createBrowserRouter, Outlet, useLocation } from "react-router";
 import Layout from "./components/layout/Layout";
 import HomePage from "./pages/homePage/HomePage";
 import NotFoundPage from "./pages/notFoundPage/NotFoundPage";
+import PageContact from "./pages/pageContact/PageContact";
+import PageEntretien from "./pages/pageEntretien/PageEntretien";
+import PageFlotteur from "./pages/pageFlotteur/PageFlotteur";
+import PageGonflable from "./pages/pageGonflable/PageGonflable";
 
 function Root() {
 	const location = useLocation();
@@ -26,7 +31,13 @@ const router = createBrowserRouter([
 			{
 				element: <Layout />,
 				errorElement: <NotFoundPage />,
-				children: [{ index: true, element: <HomePage /> }],
+				children: [
+					{ index: true, element: <HomePage /> },
+					{ path: constants.ROUTE_FLOTTEUR, element: <PageFlotteur /> },
+					{ path: constants.ROUTE_ENTRETIEN, element: <PageEntretien /> },
+					{ path: constants.ROUTE_GONFLABLE, element: <PageGonflable /> },
+					{ path: constants.ROUTE_CONTACT, element: <PageContact /> },
+				],
 			},
 		],
 	},

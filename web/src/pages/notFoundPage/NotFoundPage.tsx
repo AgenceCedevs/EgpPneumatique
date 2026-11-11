@@ -1,6 +1,7 @@
-import "./NotFoundPage.css";
+import { constants } from "@shared";
 import { Link, useLocation } from "react-router";
 import Seo from "../../components/seo/Seo";
+import "./NotFoundPage.css";
 
 function NotFoundPage() {
 	const { pathname } = useLocation();
@@ -9,19 +10,16 @@ function NotFoundPage() {
 		<>
 			<Seo title="Page introuvable" description="La page demandée est introuvable." path={pathname} noIndex />
 			<main className="nf" id="main-content" tabIndex={-1}>
-				<div className="nf__grid" aria-hidden="true" />
-				<section className="nf__inner">
-					<span className="nf__code" aria-hidden="true">
+				<div className="container nf__inner">
+					<p className="nf__code" aria-hidden="true">
 						404
-					</span>
-					<h1 className="nf__title">Page introuvable.</h1>
-					<p className="nf__sub">Cette page n'existe pas ou a été déplacée.</p>
-					<nav aria-label="Navigation de la page introuvable">
-						<Link to="/" className="nf__btn">
-							Retour à l'accueil
-						</Link>
-					</nav>
-				</section>
+					</p>
+					<h1>Page introuvable</h1>
+					<p>Cette page n'existe pas ou a été déplacée.</p>
+					<Link to={constants.ROUTE_HOME} className="btn btn--primary">
+						Retour à l'accueil
+					</Link>
+				</div>
 			</main>
 		</>
 	);

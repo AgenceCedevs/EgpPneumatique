@@ -1,11 +1,18 @@
-export const constants = {
-	DEFAULT_USER_NAME: "utilisateur",
-	DEFAULT_AVATAR: "/images/avatar_profil.png",
+const routes = {
 	ROUTE_HOME: "/",
 	ROUTE_LOGIN: "/login",
 	ROUTE_AUTH: "/auth",
 	ROUTE_DASHBOARD: "/dashboard",
 	ROUTE_CONTACT: "/contact",
+	ROUTE_FLOTTEUR: "/flotteur",
+	ROUTE_ENTRETIEN: "/entretien",
+	ROUTE_GONFLABLE: "/gonflable",
+} as const;
+
+export const constants = {
+	DEFAULT_USER_NAME: "utilisateur",
+	DEFAULT_AVATAR: "/images/avatar_profil.png",
+	...routes,
 	TEXT_WELCOME: "Bienvenue",
 	TEXT_LOGOUT: "Se déconnecter",
 	TEXT_LOGIN: "Se connecter",
@@ -15,4 +22,30 @@ export const constants = {
 	DEFAULT_TIMEOUT: 10000,
 	DEFAULT_PAGE_SIZE: 10,
 	API_AUTH_ENDPOINT: "/auth",
+	COMPANY: {
+		name: "EGP Pneumatique",
+		slogan: "Votre solution gonflable",
+		phoneDisplay: "02 40 83 69 26",
+		phoneHref: "tel:+33240836926",
+		phoneSchema: "+33240836926",
+		// TODO : remplacer par l'adresse e-mail réelle
+		email: "contact@egp-pneumatique.fr",
+		street: "284 Rue de la Bossarderie",
+		postalCode: "44150",
+		city: "Ancenis-Saint-Géréon",
+		hours: "Du lundi au vendredi, de 9h à 17h",
+		mapsUrl: "https://www.google.com/maps/place/data=!4m2!3m1!1s0x48060344054a30a7:0x31b73ecc1774780d",
+		mapsEmbedUrl: "https://www.google.com/maps?q=284+Rue+de+la+Bossarderie,+44150+Ancenis-Saint-G%C3%A9r%C3%A9on&output=embed",
+		googleReviewUrl: "https://share.google/0B1RZ8d2zafhAZaPd",
+		socials: [
+			{ label: "Facebook", href: "https://www.facebook.com/profile.php?id=100064103598692" },
+			{ label: "Instagram", href: "https://www.instagram.com/egppneumatique/" },
+		],
+	},
+	NAV_LINKS: [
+		{ label: "Changement de flotteur", to: routes.ROUTE_FLOTTEUR },
+		{ label: "Entretien bateau", to: routes.ROUTE_ENTRETIEN },
+		{ label: "Pneumatiques divers", to: routes.ROUTE_GONFLABLE },
+		{ label: "Contact", to: routes.ROUTE_CONTACT },
+	],
 };

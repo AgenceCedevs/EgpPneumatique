@@ -1,0 +1,122 @@
+.header {
+	position: sticky;
+	top: 0;
+	z-index: 50;
+	background: var(--color-bg);
+	border-bottom: 1px solid rgb(99 93 93 / 0.3);
+}
+
+.header__inner {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	gap: 1.5rem;
+	min-height: var(--header-h);
+}
+
+.header__logo {
+	display: block;
+	width: 150px;
+	height: 56px;
+	text-decoration: none;
+}
+
+.header__logo img {
+	width: 100%;
+	height: 100%;
+	object-fit: contain;
+}
+
+.header__nav {
+	display: flex;
+	align-items: center;
+	gap: 2rem;
+}
+
+.header__list {
+	display: flex;
+	gap: 1.75rem;
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.header__link {
+	padding-block: 0.4rem;
+	border-bottom: 3px solid transparent;
+	font-weight: 600;
+	text-decoration: none;
+}
+
+.header__link:hover,
+.header__link--active {
+	border-bottom-color: var(--color-accent);
+}
+
+.header__burger {
+	display: none;
+	flex-direction: column;
+	justify-content: center;
+	gap: 5px;
+	width: 44px;
+	height: 44px;
+	padding: 10px;
+	border: 0;
+	border-radius: 8px;
+	background: var(--color-surface);
+	cursor: pointer;
+}
+
+.header__burger-bar {
+	display: block;
+	height: 3px;
+	border-radius: 2px;
+	background: var(--color-on-surface);
+}
+
+/* Tablette et mobile : menu burger (jusqu'à 1023px) */
+@media (max-width: 1023px) {
+	.header__logo {
+		width: 130px;
+		height: 48px;
+	}
+
+	.header__burger {
+		display: flex;
+	}
+
+	.header__nav {
+		position: absolute;
+		top: 100%;
+		left: 0;
+		right: 0;
+		display: none;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 1.25rem;
+		padding: 1.25rem 1.25rem 1.5rem;
+		background: var(--color-bg);
+		border-bottom: 1px solid rgb(99 93 93 / 0.3);
+	}
+
+	.header__nav--open {
+		display: flex;
+	}
+
+	.header__list {
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.header__link {
+		display: block;
+		padding: 0.75rem 0;
+		border-bottom: 1px solid rgb(99 93 93 / 0.25);
+		font-size: 1.1rem;
+	}
+
+	.header__link--active {
+		color: var(--color-accent);
+		border-bottom-color: rgb(99 93 93 / 0.25);
+	}
+}

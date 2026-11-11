@@ -1,230 +1,229 @@
+import { constants } from "@shared";
+import type { ReactElement } from "react";
+import { useEffect, useState } from "react";
+import { Link } from "react-router";
+import LocalBusinessSchema from "../../components/seo/LocalBusinessSchema";
 import Seo from "../../components/seo/Seo";
 import "./HomePage.css";
+import "@fontsource/caveat/400.css";
 
-const stack = [
-	{ name: "React", cat: "Web", color: "#61DAFB" },
-	{ name: "React Native", cat: "Mobile", color: "#61DAFB" },
-	{ name: "Expo", cat: "Mobile", color: "#1B1B1B" },
-	{ name: "TypeScript", cat: "Language", color: "#3178C6" },
-	{ name: "Vite", cat: "Build", color: "#646CFF" },
-	{ name: "React Router 7", cat: "Routing", color: "#F44250" },
-	{ name: "Express", cat: "Backend", color: "#68A063" },
-	{ name: "PostgreSQL", cat: "Database", color: "#336791" },
-	{ name: "JWT", cat: "Auth", color: "#D63AFF" },
-	{ name: "Stripe", cat: "Payments", color: "#635BFF" },
-	{ name: "Nodemailer", cat: "Email", color: "#0EA5E9" },
-	{ name: "Biome", cat: "Tooling", color: "#60CFAC" },
-	{ name: "Zod", cat: "Validation", color: "#F97316" },
-	{ name: "Render", cat: "Deploy", color: "#46E3B7" },
+type HeroSlide = {
+	src: string;
+	alt: string;
+};
+
+type Stat = {
+	value: string;
+	label: string;
+};
+
+const HERO_SLIDES: readonly HeroSlide[] = [
+	{ src: "/images/stock/motorboat-aerial-pexels.jpg", alt: "Bateau photographié depuis les airs au large" },
+	{ src: "/images/stock/motorboat-cockpit-pexels.jpg", alt: "Poste de pilotage d'un bateau sur l'eau" },
+	{ src: "/images/stock/ocean-waves-unsplash.jpg", alt: "Vagues de l'océan" },
 ];
 
-const prereqs = [
-	{
-		icon: "🌐",
-		label: "Google Chrome",
-		note: "Navigateur principal pour le dev",
-		type: "app",
-	},
-	{ icon: "📝", label: "VS Code", note: "Éditeur recommandé", type: "app" },
-	{
-		icon: "🟢",
-		label: "Node.js 20+",
-		note: "LTS - vérifie avec node --version",
-		type: "cmd",
-	},
-	{ icon: "📦", label: "npm", note: "Vérifie avec npm --version", type: "cmd" },
-	{ icon: "🔀", label: "Git", note: "Vérifie avec git --version", type: "cmd" },
-	{
-		icon: "🐳",
-		label: "Docker Desktop",
-		note: "Pour PostgreSQL en local",
-		type: "app",
-	},
-	{
-		icon: "🐘",
-		label: "PostgreSQL 15+",
-		note: "Via Docker ou installation directe",
-		type: "cmd",
-	},
-	{
-		icon: "🗄️",
-		label: "TablePlus",
-		note: "Client GUI pour la base de données",
-		type: "app",
-	},
-	{
-		icon: "📐",
-		label: "Biome",
-		note: "Extension VS Code - linting & formatting",
-		type: "ext",
-	},
+// TODO : remplacer par les vrais chiffres de l'entreprise
+const STATS: readonly Stat[] = [
+	{ value: "15 ans", label: "d'expérience" },
+	{ value: "Gratuit", label: "devis sous 48 h" },
+	{ value: "24 h", label: "délai de réponse" },
+	{ value: "500+", label: "bateaux réparés" },
 ];
 
-function HomePage() {
+const SERVICES = [
+	{
+		slug: "flotteur",
+		path: constants.ROUTE_FLOTTEUR,
+		navLabel: "Changement de flotteur",
+		summary: "Votre flotteur est usé ou déchiré ? Nous le remplaçons entièrement, à l'identique ou sur mesure.",
+		cardImage: "/images/stock/motorboat-cockpit-pexels.jpg",
+		cardImageAlt: "Poste de pilotage d'un bateau sur l'eau, photo illustrative",
+	},
+	{
+		slug: "entretien",
+		path: constants.ROUTE_ENTRETIEN,
+		navLabel: "Entretien bateau",
+		summary: "Fuite, couture ouverte, boudin qui se dégonfle : nous remettons votre bateau en état rapidement.",
+		cardImage: "/images/stock/motorboat-aerial-pexels.jpg",
+		cardImageAlt: "Bateau photographié depuis les airs au large, photo illustrative",
+	},
+	{
+		slug: "gonflable",
+		path: constants.ROUTE_GONFLABLE,
+		navLabel: "Pneumatiques divers",
+		summary: "Événementiel, publicité, aires de jeux : nous réparons et entretenons vos structures gonflables.",
+		cardImage: "/images/stock/ocean-waves-unsplash.jpg",
+		cardImageAlt: "Vagues de l'océan, photo illustrative",
+	},
+] as const;
+
+type Partner = {
+	name: string;
+	logo: string;
+	url?: string;
+};
+
+// TODO : remplacer par les vrais partenaires et déposer les logos dans public/partners/
+const PARTNERS: readonly Partner[] = [
+	{ name: "Partenaire 1", logo: "/partners/partenaire-1.svg", url: "https://www.example.com" },
+	{ name: "Partenaire 2", logo: "/partners/partenaire-1.svg", url: "https://www.example.com" },
+	{ name: "Partenaire 3", logo: "/partners/partenaire-1.svg" },
+	{ name: "Partenaire 4", logo: "/partners/partenaire-1.svg" },
+];
+
+const SLIDE_DELAY_MS = 6000;
+
+function HeroCarousel(): ReactElement {
+	const [current, setCurrent] = useState<number>(0);
+	const [isPaused, setIsPaused] = useState<boolean>(false);
+
+	useEffect(() => {
+		const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+		if (isPaused || reduceMotion) {
+			return undefined;
+		}
+		const timer = window.setInterval(() => {
+			setCurrent((previous) => (previous + 1) % HERO_SLIDES.length);
+		}, SLIDE_DELAY_MS);
+		return () => window.clearInterval(timer);
+	}, [isPaused]);
+
+	return (
+		<section className="hero" aria-label="Présentation">
+			{HERO_SLIDES.map((slide, index) => (
+				<div key={slide.src} className={`hero__slide${index === current ? " hero__slide--active" : ""}`} aria-hidden={index !== current}>
+					<img src={slide.src} alt={slide.alt} loading="eager" decoding="async" />
+				</div>
+			))}
+			<div className="hero__shade" />
+
+			<div className="container hero__content">
+				<h1 className="hero__title">{constants.COMPANY.slogan}</h1>
+				<p className="hero__text">Réparation de bateaux pneumatiques et semi-rigides, ainsi que de structures gonflables, à Ancenis-Saint-Géréon.</p>
+				<div className="hero__actions">
+					<a href="#services" className="btn btn--primary">
+						Découvrir nos services
+					</a>
+					<Link to="/contact" className="btn btn--outline">
+						Nous contacter
+					</Link>
+				</div>
+			</div>
+
+			<div className="hero__dots">
+				<button type="button" className="hero__pause" onClick={() => setIsPaused((previous) => !previous)}>
+					{isPaused ? "Lecture" : "Pause"}
+				</button>
+				{HERO_SLIDES.map((slide, index) => (
+					<button key={slide.src} type="button" className={`hero__dot${index === current ? " hero__dot--active" : ""}`} aria-label={`Afficher l'image ${index + 1} sur ${HERO_SLIDES.length}`} aria-current={index === current} onClick={() => setCurrent(index)} />
+				))}
+			</div>
+		</section>
+	);
+}
+
+function HomePage(): ReactElement {
 	return (
 		<>
-			<Seo
-				description="Découvrez une base de projet web et mobile organisée autour de React, TypeScript et des outils modernes."
-				path="/"
-				ogTitle={`${import.meta.env.VITE_APP_NAME} - Construire un monorepo web et mobile`}
-				ogDescription="Une structure de monorepo pour démarrer des projets web et mobile avec une architecture cohérente."
-				image="/og-image.webp"
-			/>
-			<main className="hp-home" id="main-content" tabIndex={-1}>
-				{/* HERO SECTION */}
-				<section className="hp-hero">
-					<div className="hp-hero__noise" aria-hidden="true" />
-					<div className="hp-hero__grid" aria-hidden="true" />
-					<header className="hp-hero__inner">
-						<span className="hp-badge">{import.meta.env.VITE_APP_NAME} · Monorepo · Web · Mobile · Full-stack</span>
-						<h1 className="hp-hero__title">
-							<span className="hp-hero__title-accent">{import.meta.env.VITE_APP_NAME}</span>
-							<br />
-							Le monorepo <br />
-							Web & Mobile
-							<br />
-							dont on a besoin.
-						</h1>
-						<p className="hp-hero__sub">Une structure claire pour concevoir et faire évoluer des applications web et mobile avec des outils modernes.</p>
-						<nav className="hp-hero__cta" aria-label="Navigation dans la page">
-							<a href="#about" className="hp-btn hp-btn--primary">
-								Découvrir le projet
-							</a>
-							<a href="#stack" className="hp-btn hp-btn--ghost">
-								Découvrir la stack
-							</a>
-						</nav>
-						<dl className="hp-hero__stats">
-							<div className="hp-stat">
-								<dt className="hp-stat__lbl">Web</dt>
-								<dd className="hp-stat__num">React</dd>
-							</div>
-							<div className="hp-stat">
-								<dt className="hp-stat__lbl">Mobile</dt>
-								<dd className="hp-stat__num">Expo</dd>
-							</div>
-							<div className="hp-stat">
-								<dt className="hp-stat__lbl">Codebase</dt>
-								<dd className="hp-stat__num">1</dd>
-							</div>
-						</dl>
-					</header>
+			<Seo title="Réparation de bateaux pneumatiques à Ancenis" description="Réparation de bateaux pneumatiques, semi-rigides et structures gonflables à Ancenis-Saint-Géréon. Changement de flotteur, entretien, devis gratuit." path="/" />
+			<LocalBusinessSchema />
+
+			<main id="main-content" tabIndex={-1}>
+				<HeroCarousel />
+
+				<section className="band" aria-label="Nos engagements">
+					<ul className="container band__list">
+						{STATS.map((stat) => (
+							<li key={stat.label} className="band__item">
+								<span className="band__value">{stat.value}</span>
+								<span className="band__label">{stat.label}</span>
+							</li>
+						))}
+					</ul>
 				</section>
 
-				{/* ABOUT SECTION */}
-				<section className="hp-about" id="about">
-					<header className="hp-section-inner">
-						<p className="hp-eyebrow">C'est quoi {import.meta.env.VITE_APP_NAME} ?</p>
-						<h2>Une base claire pour vos projets web et mobile.</h2>
-					</header>
-					<div className="hp-section-inner">
-						<div className="hp-about__text">
-							<p>{import.meta.env.VITE_APP_NAME} est une base de projet web et mobile qui rassemble les applications et leurs packages partagés dans une structure unique.</p>
-							<p>L'objectif n'est pas uniquement d'écrire du code, mais de comprendre comment chaque couche s'articule (frontend, backend, base de données, infrastructure) et pourquoi elle est conçue ainsi.</p>
-							<p>Le monorepo fournit un launcher pour démarrer en local le frontend, le backend et la base de données. Un vérificateur contrôle l'intégrité du projet et génère un rapport d'audit.</p>
-							<p>Le monorepo {import.meta.env.VITE_APP_NAME} est directement réutilisable et s'adapte immédiatement à de futurs projets.</p>
-						</div>
-						<div className="hp-about__cards">
-							{[
-								{
-									icon: "🏗️",
-									title: "Une architecture modulaire",
-									desc: "Les applications et les packages sont regroupés dans un même monorepo.",
-								},
-								{
-									icon: "📱",
-									title: "Web et mobile",
-									desc: "Une base organisée pour les applications React et React Native.",
-								},
-								{
-									icon: "⌨️",
-									title: "TypeScript",
-									desc: "Des types partagés pour améliorer la cohérence du code.",
-								},
-								{
-									icon: "🛠️",
-									title: "Outils modernes",
-									desc: "Vite, Biome et les outils nécessaires au développement.",
-								},
-							].map((c) => (
-								<article className="hp-feature-card" key={c.title}>
-									<span className="hp-feature-card__icon" aria-hidden="true">
-										{c.icon}
-									</span>
-									<h3>{c.title}</h3>
-									<p>{c.desc}</p>
-								</article>
-							))}
-						</div>
-					</div>
-				</section>
-
-				{/* PREREQUISITES SECTION */}
-				<section className="hp-prereq">
-					<div className="hp-section-inner hp-section-inner--narrow">
-						<header>
-							<p className="hp-eyebrow">Avant de commencer</p>
-							<h2>Installation requise</h2>
-						</header>
-						<dl className="hp-prereq__grid">
-							{prereqs.map((p) => (
-								<div className="hp-prereq__item" key={p.label}>
-									<dt className="hp-prereq__label">
-										<span className="hp-prereq__icon" aria-hidden="true">
-											{p.icon}
-										</span>
-										<span className="hp-prereq__name">{p.label}</span>
-										<span className={`hp-prereq__tag hp-prereq__tag--${p.type}`}>{p.type === "cmd" ? "CLI" : p.type === "ext" ? "Extension" : "App"}</span>
-									</dt>
-									<dd className="hp-prereq__description">{p.note}</dd>
-								</div>
-							))}
-						</dl>
-						<aside className="hp-prereq__note">
+				<section className="section">
+					<div className="container welcome">
+						<div>
+							<h2>Bienvenue chez EGP Pneumatique</h2>
+							<p>EGP Pneumatique, c'est un atelier à taille humaine, spécialisé dans la pneumatique de votre bateau : fabrication, entretien et réparation. Forts de nos années d'expérience, nous proposons des prestations sur mesure, adaptées à votre bateau et à vos attentes.</p>
 							<p>
-								Le reste est fourni dans le monorepo ou accessible en ligne.
-								<br /> <br />
-								Ce monorepo est optimisé pour un environnement Windows.
-								<br /> <br />
-								Certaines fonctionnalités peuvent avoir un comportement différent ou ne pas être fonctionnelles sur macOS/Linux.
+								Depuis notre atelier d'Ancenis-Saint-Géréon, nous réparons et remettons en état les bateaux pneumatiques, les semi-rigides et les structures gonflables. Nous assurons aussi l'entretien complet des bateaux : réparation des pneumatiques, retubage, fabrication sur mesure et nettoyage intérieur et
+								extérieur. Un entretien régulier prolonge la durée de vie de vos pneumatiques et de vos équipements.
 							</p>
-						</aside>
+							<p>
+								Nous fabriquons et réparons également tous types de structures gonflables (stands, mange-debout, cubes promotionnels, paddles, pontons, bouées, etc.), pour les particuliers comme pour les professionnels. Notre objectif : vous redonner le plaisir de naviguer, en toute confiance, avec une réparation
+								durable et un prix annoncé d'avance.
+							</p>
+							<p className="welcome__signature">
+								Emmelyne et Guillaume
+								<br />
+								gérants d'EGP Pneumatique
+							</p>
+						</div>
+						<img className="welcome__image" src="/images/stock/motorboat-cockpit-pexels.jpg" alt="Poste de pilotage d'un bateau sur l'eau" loading="lazy" />
 					</div>
 				</section>
 
-				{/* TECH STACK SECTION */}
-				<section className="hp-stack" id="stack">
-					<div className="hp-section-inner">
-						<header>
-							<p className="hp-eyebrow">Stack technique</p>
-							<h2>Des technos qui tiennent en production</h2>
-						</header>
-						<ul className="hp-stack__grid">
-							{stack.map((s) => (
-								<li key={s.name}>
-									<span className="hp-stack__pill" style={{ "--accent": s.color } as React.CSSProperties}>
-										<span className="hp-stack__pill-cat">{s.cat}</span>
-										<span className="hp-stack__pill-name">{s.name}</span>
-									</span>
+				<section id="services" className="section section--surface">
+					<div className="container">
+						<h2>Nos services</h2>
+						<p className="services-intro">Trois savoir-faire, rien de plus : nous nous concentrons sur ce que nous maîtrisons vraiment. Chaque intervention est réalisée dans notre atelier, avec des matériaux adaptés à votre bateau, pour vous garantir un travail soigné, durable et un prix annoncé d'avance.</p>
+						<ul className="cards">
+							{SERVICES.map((service) => (
+								<li key={service.slug} className="card">
+									<img className="card__image" src={service.cardImage} alt={service.cardImageAlt} loading="lazy" />
+									<div className="card__body">
+										<h3>
+											<Link to={service.path} className="card__link">
+												{service.navLabel}
+											</Link>
+										</h3>
+										<p>{service.summary}</p>
+									</div>
 								</li>
 							))}
 						</ul>
 					</div>
 				</section>
 
-				{/* CTA FINAL SECTION */}
-				<section className="hp-cta">
-					<div className="hp-cta__noise" aria-hidden="true" />
-					<div className="hp-section-inner hp-section-inner--narrow hp-cta__inner">
-						<header>
-							<h2>Démarrer un projet sur une base solide.</h2>
-							<p>Découvrez la stack technique et choisissez les outils adaptés à votre projet.</p>
-						</header>
-						<nav aria-label="Découvrir la stack technique">
-							<a href="#stack" className="hp-btn hp-btn--primary hp-btn--lg">
-								Voir la stack technique
-							</a>
-						</nav>
+				<section id="partners" className="section section--white" aria-labelledby="partners-title">
+					<div className="container">
+						<h2 id="partners-title">Nos partenaires</h2>
+						<ul className="partners">
+							{PARTNERS.map((partner) => {
+								const logo = <img className="partners__logo" src={partner.logo} alt={partner.name} loading="lazy" />;
+								return (
+									<li key={partner.name} className="partners__item">
+										{partner.url ? (
+											<a href={partner.url} className="partners__link" target="_blank" rel="noopener noreferrer" aria-label={`${partner.name} (s'ouvre dans un nouvel onglet)`}>
+												{logo}
+											</a>
+										) : (
+											logo
+										)}
+									</li>
+								);
+							})}
+						</ul>
+					</div>
+				</section>
+
+				<section className="final-cta" aria-labelledby="final-cta-title">
+					<div className="container final-cta__inner">
+						<h2 id="final-cta-title">Un devis pour votre bateau ?</h2>
+						<p className="final-cta__text">Décrivez-nous votre besoin : nous revenons vers vous sous 24 h avec un devis clair et gratuit, sans engagement.</p>
+						<div className="final-cta__actions">
+							<Link to="/contact" className="btn btn--primary">
+								Demander un devis gratuit
+							</Link>
+						</div>
+						<ul className="final-cta__points">
+							<li>Devis gratuit sous 48 h</li>
+							<li>Réponse sous 24 h</li>
+							<li>Atelier à Ancenis-Saint-Géréon</li>
+						</ul>
 					</div>
 				</section>
 			</main>

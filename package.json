@@ -30,5 +30,8 @@
 		"server",
 		"mobile",
 		"shared"
-	]
+	],
+	"dependencies": {
+		"@fontsource/caveat": "^5.3.0"
+	}
 }

@@ -1,0 +1,34 @@
+.legal-modal {
+	width: min(100% - 2rem, 640px);
+	max-height: 85vh;
+	padding: 2rem;
+	border: 0;
+	border-radius: var(--radius);
+	background: var(--color-bg);
+	color: var(--color-text);
+}
+
+.legal-modal::backdrop {
+	background: rgb(0 0 0 / 0.65);
+}
+
+.legal-modal__body {
+	max-height: calc(85vh - 8rem);
+	margin-bottom: 1.5rem;
+	overflow-y: auto;
+}
+
+.legal-modal h3 {
+	margin-top: 1.25rem;
+	font-size: 1.25rem;
+}
+
+@media (max-width: 767px) {
+	.legal-modal {
+		padding: 1.25rem;
+	}
+
+	.legal-modal .btn {
+		width: 100%;
+	}
+}
