@@ -62,6 +62,26 @@
 	font-weight: 400;
 }
 
+.form input[type="file"]::file-selector-button {
+	margin-right: 0.75rem;
+	padding: 0.65rem 1rem;
+	border: 0;
+	border-radius: 999px;
+	background: var(--color-accent);
+	color: var(--color-on-accent);
+	font: inherit;
+	font-weight: 600;
+	cursor: pointer;
+	transition:
+		background-color 0.2s ease,
+		transform 0.2s ease;
+}
+
+.form input[type="file"]::file-selector-button:hover {
+	background: #000000;
+	transform: translateY(-1px);
+}
+
 .form textarea {
 	resize: vertical;
 }
@@ -93,6 +113,115 @@
 	min-height: 1.5em;
 	margin: 0;
 	font-weight: 600;
+}
+
+/* Avis clients */
+.reviews {
+	padding-top: 6.5rem;
+}
+
+.reviews__intro {
+	margin: 0.75rem 0 0;
+	font-size: 1.05rem;
+}
+
+.reviews__list {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+	gap: 2rem;
+	margin: 2.5rem 0;
+	padding: 0;
+	list-style: none;
+}
+
+.review {
+	display: flex;
+	flex-direction: column;
+	padding: 1.5rem;
+	border-left: 6px solid var(--color-accent);
+	border-radius: var(--radius);
+	background: var(--color-bg);
+	color: var(--color-text);
+}
+
+.review__stars {
+	margin: 0 0 0.75rem;
+	color: var(--color-accent);
+	font-size: 1.3rem;
+	letter-spacing: 0.15em;
+}
+
+.review__text {
+	flex: 1;
+	margin: 0;
+}
+
+.review__text p {
+	margin: 0 0 1rem;
+}
+
+.review__author {
+	margin: 0;
+	font-weight: 700;
+}
+
+.review__date {
+	font-weight: 400;
+}
+
+.reviews__link {
+	display: flex;
+	width: fit-content;
+	margin-inline: auto;
+}
+
+.reviews__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	align-items: center;
+	gap: 1rem;
+}
+
+.reviews__actions .reviews__link {
+	margin: 0;
+	border-color: #000000;
+	background: #000000;
+	color: #ffffff;
+}
+
+.reviews__actions .reviews__link:hover,
+.reviews__actions .reviews__link:focus-visible {
+	border-color: var(--color-accent);
+	background: var(--color-accent);
+	color: var(--color-on-accent);
+}
+
+.steps-section {
+	position: relative;
+	isolation: isolate;
+	margin-top: 0;
+	padding-block: 4rem 5rem;
+	background: var(--color-accent);
+	color: var(--color-on-accent);
+}
+
+.steps-section::before {
+	position: absolute;
+	z-index: -1;
+	top: -79px;
+	right: 0;
+	left: 0;
+	height: 80px;
+	background: var(--color-accent);
+	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 80H1440V36C1260 20 1080 60 900 42C720 24 540 2 360 24C240 38 120 47 0 36Z'/%3E%3C/svg%3E") 0 0 / 1440px 80px repeat-x;
+	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 80H1440V36C1260 20 1080 60 900 42C720 24 540 2 360 24C240 38 120 47 0 36Z'/%3E%3C/svg%3E") 0 0 / 1440px 80px repeat-x;
+	content: "";
+	pointer-events: none;
+}
+
+.steps-section :focus-visible {
+	outline-color: #ffffff;
 }
 
 /* Étapes */
@@ -135,11 +264,34 @@
 }
 
 /* Carte */
+.map {
+	position: relative;
+	min-height: clamp(420px, 60vw, 560px);
+}
+
 .map iframe {
 	display: block;
-	width: 100%;
-	height: 420px;
 	border: 0;
+	position: absolute;
+	inset: 0;
+	width: 100%;
+	height: 100%;
+}
+
+.map__heading {
+	position: relative;
+	z-index: 1;
+	text-align: right;
+	pointer-events: none;
+}
+
+.map__heading h2 {
+	display: inline-block;
+	padding: 0.5rem 1.25rem;
+	border-radius: var(--radius);
+	background: var(--color-bg);
+	box-shadow: 0 6px 20px rgb(0 0 0 / 0.15);
+	pointer-events: auto;
 }
 
 .map__heading {
@@ -160,10 +312,6 @@
 	.steps {
 		grid-template-columns: repeat(2, 1fr);
 	}
-
-	.map iframe {
-		height: 360px;
-	}
 }
 
 /* Mobile : inférieur à 767px */
@@ -180,9 +328,5 @@
 
 	.form .btn {
 		justify-self: stretch;
-	}
-
-	.map iframe {
-		height: 300px;
 	}
 }

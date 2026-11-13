@@ -30,6 +30,33 @@ const STEPS: readonly Step[] = [
 	},
 ];
 
+type Review = {
+	author: string;
+	rating: number;
+	text: string;
+	date: string;
+};
+
+const GOOGLE_REVIEWS_URL = constants.COMPANY.mapsUrl;
+
+const REVIEWS: readonly Review[] = [
+	{ author: "Grégory C.", rating: 5, text: "bonjour après avoir coulé totalement avec mon zodiac en juillet 2025, je suis heureux et très satisfait du réparateur passionné que j'ai rencontré, un beau duo avec sa femme, merci beaucoup pour ce beau boulot..", date: "Janvier 2026" },
+
+	{
+		author: "Nora B.",
+		rating: 5,
+		text: "Accueil très chaleureux et professionnel. L’équipe est de très bon conseil, à l’écoute et prend le temps d’expliquer les choses clairement. Travail sérieux et de grande qualité. Une entreprise très professionnelle que je recommande sans hésitation. Merci à l’équipe d’EGP Pneumatique pour son efficacité et son excellent service !.",
+		date: "Juillet 2026",
+	},
+
+	{
+		author: "Yann T.",
+		rating: 5,
+		text: "Personnel très compétents, très arrangeants, d'une gentillesse incroyable. Un vrai coup de cœur.... Je recommande les yeux fermés",
+		date: "Aout 2026",
+	},
+];
+
 const OTHER_SERVICE = "Autre demande";
 const SERVICES = ["Changement de flotteur", "Entretien bateau", "Pneumatiques divers"] as const;
 const MAX_ATTACHMENT_SIZE = 5 * 1024 * 1024;
@@ -152,7 +179,7 @@ function PageContact() {
 				<section className="section">
 					<div className="container contact">
 						<div className="contact__info">
-							<h2>Parlons de votre bateau</h2>
+							<h2>Parlons de votre projet</h2>
 							<ul className="contact__list">
 								<li>
 									<span className="contact__label">Téléphone</span>
@@ -178,9 +205,46 @@ function PageContact() {
 					</div>
 				</section>
 
-				<section className="section section--surface">
+				<section id="reviews" className="section section--surface reviews" aria-labelledby="reviews-title">
 					<div className="container">
-						<h2>Comment ça se passe ?</h2>
+						<h2 id="reviews-title">Avis de nos clients</h2>
+						<p className="reviews__intro">Ils nous ont confié leur bateau : voici ce qu'ils en disent sur Google.</p>
+						<ul className="reviews__list">
+							{REVIEWS.map((review) => (
+								<li key={`${review.author}-${review.date}`} className="review">
+									<p className="review__stars" role="img" aria-label={`${review.rating} étoiles sur 5`}>
+										{"★".repeat(review.rating)}
+									</p>
+									<blockquote className="review__text">
+										<p>{review.text}</p>
+									</blockquote>
+									<p className="review__author">
+										{review.author} <span className="review__date">· {review.date}</span>
+									</p>
+								</li>
+							))}
+						</ul>
+						<div className="reviews__actions">
+							<a href={GOOGLE_REVIEWS_URL} className="btn btn--primary reviews__link" target="_blank" rel="noopener noreferrer" aria-label="Voir tous nos avis sur Google (s'ouvre dans un nouvel onglet)">
+								Voir tous les avis sur Google
+							</a>
+							<a href={constants.COMPANY.googleReviewUrl} className="btn btn--primary reviews__link" target="_blank" rel="noopener noreferrer" aria-label="Laisser un avis sur Google (s'ouvre dans un nouvel onglet)">
+								Laisser un avis
+							</a>
+						</div>
+					</div>
+				</section>
+
+				<section className="map" aria-label="Plan d'accès">
+					<div className="container map__heading">
+						<h2>Où sommes-nous ?</h2>
+					</div>
+					<iframe title="Carte : EGP Pneumatique, Ancenis-Saint-Géréon" src={constants.COMPANY.mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
+				</section>
+
+				<section className="steps-section" aria-labelledby="steps-title">
+					<div className="container">
+						<h2 id="steps-title">Comment ça se passe ?</h2>
 						<ol className="steps">
 							{STEPS.map((step) => (
 								<li key={step.title} className="steps__item">
@@ -190,13 +254,6 @@ function PageContact() {
 							))}
 						</ol>
 					</div>
-				</section>
-
-				<section className="map" aria-label="Plan d'accès">
-					<div className="container map__heading">
-						<h2>Où sommes-nous ?</h2>
-					</div>
-					<iframe title="Carte : EGP Pneumatique, Ancenis-Saint-Géréon" src={constants.COMPANY.mapsEmbedUrl} loading="lazy" referrerPolicy="no-referrer-when-downgrade" />
 				</section>
 
 				<ToastContainer position="top-center" />

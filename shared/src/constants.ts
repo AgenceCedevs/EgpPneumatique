@@ -36,7 +36,7 @@ export const constants = {
 		hours: "Du lundi au vendredi, de 9h à 17h",
 		mapsUrl: "https://www.google.com/maps/place/data=!4m2!3m1!1s0x48060344054a30a7:0x31b73ecc1774780d",
 		mapsEmbedUrl: "https://www.google.com/maps?q=284+Rue+de+la+Bossarderie,+44150+Ancenis-Saint-G%C3%A9r%C3%A9on&output=embed",
-		googleReviewUrl: "https://share.google/0B1RZ8d2zafhAZaPd",
+		googleReviewUrl: "https://www.google.com/maps/place//data=!4m3!3m2!1s0x48060344054a30a7:0x31b73ecc1774780d!12e1?source=g.page.m.ia._&laa=nmx-review-solicitation-ia2",
 		socials: [
 			{ label: "Facebook", href: "https://www.facebook.com/profile.php?id=100064103598692" },
 			{ label: "Instagram", href: "https://www.instagram.com/egppneumatique/" },
@@ -46,6 +46,5 @@ export const constants = {
 		{ label: "Changement de flotteur", to: routes.ROUTE_FLOTTEUR },
 		{ label: "Entretien bateau", to: routes.ROUTE_ENTRETIEN },
 		{ label: "Pneumatiques divers", to: routes.ROUTE_GONFLABLE },
-		{ label: "Contact", to: routes.ROUTE_CONTACT },
 	],
 };

@@ -107,6 +107,7 @@ main:focus {
 
 .section--surface {
 	padding-top: calc(5rem + 1.5rem);
+	padding-bottom: 7rem;
 	--wave-h: 80px;
 	position: relative;
 	isolation: isolate;
@@ -121,13 +122,10 @@ main:focus {
 	background: var(--color-surface);
 	-webkit-mask:
 		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 80H1440V36C1260 20 1080 60 900 42C720 24 540 2 360 24C240 38 120 47 0 36Z'/%3E%3C/svg%3E") 0 0 / 1440px var(--wave-h) repeat-x,
-		linear-gradient(#000 0 0) 0 calc(var(--wave-h) - 1px) / 100% calc(100% - 2 * var(--wave-h) + 2px) no-repeat,
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V44C1200 76 960 8 720 34C480 60 240 12 0 44Z'/%3E%3C/svg%3E") 0 100% / 1440px var(--wave-h) repeat-x;
+		linear-gradient(#000 0 0) 0 calc(var(--wave-h) - 1px) / 100% calc(100% - var(--wave-h) + 1px) no-repeat;
 	mask:
 		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 80H1440V36C1260 20 1080 60 900 42C720 24 540 2 360 24C240 38 120 47 0 36Z'/%3E%3C/svg%3E") 0 0 / 1440px var(--wave-h) repeat-x,
-		linear-gradient(#000 0 0) 0 calc(var(--wave-h) - 1px) / 100% calc(100% - 2 * var(--wave-h) + 2px) no-repeat,
-		url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 0H1440V44C1200 76 960 8 720 34C480 60 240 12 0 44Z'/%3E%3C/svg%3E") 0 100% / 1440px var(--wave-h) repeat-x;
-	animation: wave-slide 28s linear infinite;
+		linear-gradient(#000 0 0) 0 calc(var(--wave-h) - 1px) / 100% calc(100% - var(--wave-h) + 1px) no-repeat;
 	content: "";
 }
 
@@ -135,23 +133,19 @@ main:focus {
 	from {
 		-webkit-mask-position:
 			0 0,
-			0 calc(var(--wave-h) - 1px),
-			0 100%;
+			0 calc(var(--wave-h) - 1px);
 		mask-position:
 			0 0,
-			0 calc(var(--wave-h) - 1px),
-			0 100%;
+			0 calc(var(--wave-h) - 1px);
 	}
 
 	to {
 		-webkit-mask-position:
 			1440px 0,
-			0 calc(var(--wave-h) - 1px),
-			-1440px 100%;
+			0 calc(var(--wave-h) - 1px);
 		mask-position:
 			1440px 0,
-			0 calc(var(--wave-h) - 1px),
-			-1440px 100%;
+			0 calc(var(--wave-h) - 1px);
 	}
 }
 
@@ -422,7 +416,7 @@ main:focus {
 }
 
 .section--surface + .section {
-	margin-top: -40px;
+	margin-top: 0;
 	padding-top: 2rem;
 }
 
@@ -439,7 +433,19 @@ main:focus {
 
 .service-cta .container {
 	display: grid;
-	justify-items: start;
+	grid-template-columns: minmax(0, 1fr) auto;
+	gap: 1rem 3rem;
+	align-items: center;
+}
+
+.service-cta h2,
+.service-cta p {
+	grid-column: 1;
+}
+
+.service-cta .btn {
+	grid-column: 2;
+	grid-row: 1 / span 2;
 }
 
 .service-cta {
@@ -453,7 +459,8 @@ main:focus {
 	margin-top: 2rem;
 }
 
-.service-cta::before {
+.service-cta::before,
+.final-cta::before {
 	position: absolute;
 	z-index: -1;
 	top: calc(var(--wave-h, 80px) * -1 + 1px);
@@ -463,12 +470,11 @@ main:focus {
 	background: var(--color-accent);
 	-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 80H1440V36C1260 20 1080 60 900 42C720 24 540 2 360 24C240 38 120 47 0 36Z'/%3E%3C/svg%3E") 0 0 / 1440px 80px repeat-x;
 	mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1440 80' preserveAspectRatio='none'%3E%3Cpath d='M0 80H1440V36C1260 20 1080 60 900 42C720 24 540 2 360 24C240 38 120 47 0 36Z'/%3E%3C/svg%3E") 0 0 / 1440px 80px repeat-x;
-	animation: service-cta-wave 28s linear infinite;
 	content: "";
 	pointer-events: none;
 }
 
-@keyframes service-cta-wave {
+@keyframes cta-wave {
 	from {
 		-webkit-mask-position: 0 0;
 		mask-position: 0 0;
@@ -513,6 +519,10 @@ main:focus {
 		padding-block: 4rem;
 	}
 
+	.section--surface {
+		padding-bottom: 6rem;
+	}
+
 	.service-intro {
 		grid-template-columns: 1fr;
 		gap: 1.5rem;
@@ -537,10 +547,23 @@ main:focus {
 		padding-block: 3rem;
 	}
 
+	.section--surface {
+		padding-bottom: 5rem;
+	}
+
 	.service-intro,
 	.skills,
 	.realisations {
 		grid-template-columns: 1fr;
+	}
+
+	.service-cta .container {
+		grid-template-columns: 1fr;
+	}
+
+	.service-cta .btn {
+		grid-column: 1;
+		grid-row: auto;
 	}
 
 	.service-intro {

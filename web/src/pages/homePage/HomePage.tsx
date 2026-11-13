@@ -70,6 +70,10 @@ const PARTNERS: readonly Partner[] = [
 	{ name: "Partenaire 2", logo: "/partners/partenaire-1.svg", url: "https://www.example.com" },
 	{ name: "Partenaire 3", logo: "/partners/partenaire-1.svg" },
 	{ name: "Partenaire 4", logo: "/partners/partenaire-1.svg" },
+	{ name: "Partenaire 5", logo: "/partners/partenaire-1.svg" },
+	{ name: "Partenaire 6", logo: "/partners/partenaire-1.svg" },
+	{ name: "Partenaire 7", logo: "/partners/partenaire-1.svg" },
+	{ name: "Partenaire 8", logo: "/partners/partenaire-1.svg" },
 ];
 
 const SLIDE_DELAY_MS = 6000;
@@ -191,6 +195,7 @@ function HomePage(): ReactElement {
 				<section id="partners" className="section section--white" aria-labelledby="partners-title">
 					<div className="container">
 						<h2 id="partners-title">Nos partenaires</h2>
+						<p className="partners__intro">Nous nous appuyons sur des partenaires de confiance pour vous proposer des solutions fiables, adaptées à votre bateau.</p>
 						<ul className="partners">
 							{PARTNERS.map((partner) => {
 								const logo = <img className="partners__logo" src={partner.logo} alt={partner.name} loading="lazy" />;

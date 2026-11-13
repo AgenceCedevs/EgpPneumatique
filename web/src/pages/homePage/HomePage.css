@@ -223,17 +223,23 @@
 }
 
 #partners {
-	padding-top: 2rem;
-	padding-bottom: 5.5rem;
+	padding-top: 3.5rem;
+	padding-bottom: 8.5rem;
+}
+
+.partners__intro {
+	max-width: 58ch;
+	margin: 0.75rem 0 0;
+	font-size: 1.05rem;
 }
 
 .partners {
-	display: flex;
-	flex-wrap: wrap;
-	gap: 2rem 3rem;
+	display: grid;
+	grid-template-columns: repeat(4, minmax(0, 1fr));
+	gap: 2.5rem 4rem;
 	align-items: center;
-	justify-content: center;
-	margin: 2.5rem 0 0;
+	justify-items: center;
+	margin: 3rem 0 0;
 	padding: 0;
 	list-style: none;
 }
@@ -253,6 +259,7 @@
 /* CTA final */
 .final-cta {
 	position: relative;
+	isolation: isolate;
 	z-index: 1;
 	margin-top: -1.5rem;
 	padding-block: 4rem;
@@ -324,6 +331,12 @@
 .final-cta :focus-visible {
 	outline-color: #000000;
 }
+.reviews__actions {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 1rem;
+}
 
 /* Tablette : 768px à 1023px */
 @media (min-width: 768px) and (max-width: 1023px) {
@@ -338,6 +351,10 @@
 	.cards {
 		grid-template-columns: repeat(2, 1fr);
 		gap: 1.5rem;
+	}
+
+	.partners {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 	}
 }
 
@@ -371,6 +388,7 @@
 	}
 
 	.partners {
+		grid-template-columns: repeat(2, minmax(0, 1fr));
 		gap: 1.5rem 1.5rem;
 	}
 
